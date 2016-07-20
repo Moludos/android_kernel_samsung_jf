@@ -146,8 +146,18 @@ struct mem_cgroup_zone {
 /*
  * From 0 .. 100.  Higher means more swappy.
  */
-int vm_swappiness = 60;
-long vm_total_pages;	/* The total number of pages which the VM controls */
+int vm_swappiness = 0;
+/*
+ * The total number of pages which are beyond the high watermark within all
+ * zones.
+ */
+unsigned long vm_total_pages;
+
+#ifdef CONFIG_KSWAPD_CPU_AFFINITY_MASK
+char *kswapd_cpu_mask = CONFIG_KSWAPD_CPU_AFFINITY_MASK;
+#else
+char *kswapd_cpu_mask = NULL;
+#endif
 
 #ifdef CONFIG_RUNTIME_COMPCACHE
 extern int get_rtcc_status(void);
